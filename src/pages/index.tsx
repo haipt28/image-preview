@@ -1,12 +1,8 @@
 import { SeoPage } from "@/components/seo";
 import userData from "@/data/data-its.json";
-import { DefaultEventsMap } from "@socket.io/component-emitter";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { io, Socket } from "socket.io-client";
-
-let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
 export interface IHomePageProps {}
 
@@ -19,15 +15,6 @@ export default function HomePage(props: IHomePageProps) {
     name: "default",
     image: "/img/background.png",
   };
-
-  // socket
-  const socketInitializer = async () => {
-    socket = io(SOCKET_DOMAIN);
-  };
-
-  useEffect(() => {
-    socketInitializer();
-  }, []);
 
   const duration = 1; // seconds
 
