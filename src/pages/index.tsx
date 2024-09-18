@@ -1,22 +1,24 @@
 import { SeoPage } from "@/components/seo";
-import userData from "@/data/user.json";
+import userData from "@/data/data-its.json";
 import { DefaultEventsMap } from "@socket.io/component-emitter";
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
-
-const SOCKET_DOMAIN = process.env.NEXT_PUBLIC_SOCKET_DOMAIN as string;
 
 let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
 export interface IHomePageProps {}
 
 export default function HomePage(props: IHomePageProps) {
-  const [imageIndex, setImageIndex] = useState(0);
-  const user = userData[imageIndex];
-
   const [currentImage, setCurrentImage] = useState<string | null>(null);
   const [fadeIn, setFadeIn] = useState(true);
+
+  const defaultUser = {
+    id: "default",
+    name: "default",
+    image: "/img/background.png",
+  };
 
   // socket
   const socketInitializer = async () => {
@@ -29,55 +31,58 @@ export default function HomePage(props: IHomePageProps) {
 
   const duration = 1; // seconds
 
-  // useEffect(() => {
-  //   // Lắng nghe sự kiện từ socket để nhận hình ảnh
-  //   socket.on("newImage", (imageData) => {
-  //     setFadeIn(false); // Bắt đầu quá trình chuyển đổi (mờ dần)
-  //     setTimeout(() => {
-  //       setCurrentImage(imageData); // Cập nhật hình ảnh mới
-  //       setFadeIn(true); // Hiển thị hình ảnh với hiệu ứng mờ dần
-  //     }, duration * 1000); // Thời gian khớp với animation
-  //   });
-
-  //   return () => {
-  //     socket.off("newImage"); // Cleanup khi component unmount
-  //   };
-  // }, []);
-
+  const SOCKET_DOMAIN = process.env.NEXT_PUBLIC_SOCKET_DOMAIN as string;
   useEffect(() => {
-    const interval = setInterval(() => {
+    const companyId = "66e949f1e3a47cc183659228";
+    const socket = new WebSocket(`${SOCKET_DOMAIN}/${companyId}`);
+
+    socket.onmessage = (event: any) => {
+      const obj = JSON.parse(event.data);
+
+      console.log("new data: ", obj);
+
+      const user = userData.find((item) => item.id === obj?.id);
+
+      let imageData = "/img/background.png";
+
+      if (user) {
+        imageData = user.image;
+      }
+
       setFadeIn(false);
       setTimeout(() => {
-        setImageIndex((prevIndex) => (prevIndex + 1) % userData.length);
+        setCurrentImage(imageData);
         setFadeIn(true);
-      }, duration * 1000); // Thời gian trễ khớp với thời gian animation
-    }, 5000); // Thay đổi hình ảnh mỗi 5 giây
-
-    return () => clearInterval(interval); // Cleanup interval
-  }, []);
+      }, duration * 1000);
+    };
+    return () => {
+      socket.close();
+    };
+  }, [SOCKET_DOMAIN]);
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center relative bg-[#475569]">
       <SeoPage title={"Trang chủ"} />
       <AnimatePresence>
-        {user.image && (
+        {currentImage ? (
           <motion.img
-            key={user.id}
-            src={user.image}
-            alt={user.name}
-            className="absolute inset-0 w-full h-full object-cover"
+            key={currentImage}
+            src={currentImage}
+            alt={currentImage}
+            className="absolute inset-0 w-full h-full object-fill"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: fadeIn ? 1 : 0, scale: fadeIn ? 1 : 0.95 }}
             transition={{ duration: duration }}
           />
+        ) : (
+          <Image
+            src={defaultUser.image}
+            alt={defaultUser.name}
+            fill
+            className="absolute inset-0 w-full h-full object-fill"
+          />
         )}
       </AnimatePresence>
-
-      {/* <div className="absolute bottom-10 left-10">
-        <p className="text-[50px] drop-shadow-lg">Username: {user.name}</p>
-        <p className="text-[24px] drop-shadow-lg">Phone: {user.phone}</p>
-        <p className="text-[24px] drop-shadow-lg">Address: {user.address}</p>
-      </div> */}
     </div>
   );
 }

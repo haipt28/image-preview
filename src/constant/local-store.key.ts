@@ -1,2 +1,0 @@
-export const COLOR_THEME_CASE = "COLOR_THEME_CASE";
-export const LANGUAGE_CASE = "LANGUAGE_CASE";

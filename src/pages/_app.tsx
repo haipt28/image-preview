@@ -1,11 +1,10 @@
-import { AppPropsWithLayout } from "@/interface";
 import { GlobalProvider } from "@/provider";
 import "@/translate";
 import "@/styles/globals.css";
 import React from "react";
 import { SessionProvider } from "next-auth/react";
 
-export default function App({ Component, pageProps }: AppPropsWithLayout) {
+export default function App({ Component, pageProps }: any) {
   const Layout = Component.Layout || React.Fragment;
 
   return (
