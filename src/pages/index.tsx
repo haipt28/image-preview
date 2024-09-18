@@ -13,7 +13,7 @@ export default function HomePage(props: IHomePageProps) {
   const defaultUser = {
     id: "default",
     name: "default",
-    image: "/img/background.png",
+    image: "/user-svg/1.svg",
   };
 
   const duration = 1; // seconds
@@ -31,7 +31,7 @@ export default function HomePage(props: IHomePageProps) {
 
       const user = userData.find((item) => item.id === obj?.data?.user_id);
 
-      let imageData = "/img/background.png";
+      let imageData = defaultUser.image;
 
       if (user) {
         imageData = user.image;
@@ -49,7 +49,7 @@ export default function HomePage(props: IHomePageProps) {
   }, [SOCKET_DOMAIN]);
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center justify-center relative bg-[#475569]">
+    <div className="w-screen h-screen flex flex-col items-center justify-center relative bg-[#7dd3fc]">
       <SeoPage title={"Trang chủ"} />
       <AnimatePresence>
         {currentImage ? (
@@ -57,7 +57,7 @@ export default function HomePage(props: IHomePageProps) {
             key={currentImage}
             src={currentImage}
             alt={currentImage}
-            className="absolute inset-0 w-full h-full object-fill"
+            className="absolute inset-0 w-full h-full object-cover"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: fadeIn ? 1 : 0, scale: fadeIn ? 1 : 0.95 }}
             transition={{ duration: duration }}
@@ -67,7 +67,7 @@ export default function HomePage(props: IHomePageProps) {
             src={defaultUser.image}
             alt={defaultUser.name}
             fill
-            className="absolute inset-0 w-full h-full object-fill"
+            className="absolute inset-0 w-full h-full object-cover"
           />
         )}
       </AnimatePresence>
