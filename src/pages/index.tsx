@@ -27,8 +27,9 @@ export default function HomePage(props: IHomePageProps) {
       const obj = JSON.parse(event.data);
 
       console.log("new data: ", obj);
+      console.log("new data userID: ", obj?.data?.user_id);
 
-      const user = userData.find((item) => item.id === obj?.id);
+      const user = userData.find((item) => item.id === obj?.data?.user_id);
 
       let imageData = "/img/background.png";
 
