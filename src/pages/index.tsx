@@ -35,13 +35,12 @@ export default function HomePage(props: IHomePageProps) {
 
       if (user) {
         imageData = user.image;
+        setFadeIn(false);
+        setTimeout(() => {
+          setCurrentImage(imageData);
+          setFadeIn(true);
+        }, duration * 1000);
       }
-
-      setFadeIn(false);
-      setTimeout(() => {
-        setCurrentImage(imageData);
-        setFadeIn(true);
-      }, duration * 1000);
     };
     return () => {
       socket.close();
