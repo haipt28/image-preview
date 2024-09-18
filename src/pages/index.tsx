@@ -20,7 +20,7 @@ export default function HomePage(props: IHomePageProps) {
 
   const SOCKET_DOMAIN = process.env.NEXT_PUBLIC_SOCKET_DOMAIN as string;
   useEffect(() => {
-    const companyId = "664ac252e03b1077dd56cf7f";
+    const companyId = process.env.NEXT_PUBLIC_COMPANY_ID;
     const socket = new WebSocket(`${SOCKET_DOMAIN}/${companyId}`);
 
     socket.onmessage = (event: any) => {
