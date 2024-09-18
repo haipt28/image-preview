@@ -1,0 +1,23 @@
+[
+  {
+    "id": "user 1 id",
+    "name": "hai dep trai 1",
+    "image": "/desktop-wallpapers/image-1.jpg",
+    "phone": "012312312321",
+    "address": "12 Nguyễn Tri Phương, Thanh Khê, Đà Nẵng"
+  },
+  {
+    "id": "user-2-id",
+    "name": "hai dep trai 2",
+    "image": "/desktop-wallpapers/image-2.jpg",
+    "phone": "012312312321",
+    "address": "12 Nguyễn Tri Phương, Thanh Khê, Đà Nẵng"
+  },
+  {
+    "id": "user-3-id",
+    "name": "hai dep trai 3",
+    "image": "/desktop-wallpapers/image-3.jpg",
+    "phone": "012312312321",
+    "address": "12 Nguyễn Tri Phương, Thanh Khê, Đà Nẵng"
+  }
+]
