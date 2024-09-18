@@ -1,5 +1,5 @@
 import { SeoPage } from "@/components/seo";
-import userData from "@/data/data-its.json";
+import userData from "@/data/data-its-svg.json";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
